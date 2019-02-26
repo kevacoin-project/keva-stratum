@@ -26,7 +26,7 @@ func (b *BlockTemplate) nextBlob(extraNonce uint32, instanceId []byte) string {
 	copy(blobBuff[b.reservedOffset+4:b.reservedOffset+7], instanceId)
 	copy(blobBuff[b.reservedOffset:], extraBuff.Bytes())
 	//blob := cnutil.ConvertBlob(blobBuff)
-	blob := nil //TODO: fix this!
+	blob := []byte("fix this!") //TODO: fix this!
 	return hex.EncodeToString(blob)
 }
 

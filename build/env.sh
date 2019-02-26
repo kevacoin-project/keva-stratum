@@ -14,7 +14,7 @@ ethdir="$workspace/src/github.com/kevacoin-project"
 if [ ! -L "$ethdir/keva-stratum" ]; then
     mkdir -p "$ethdir"
     cd "$ethdir"
-    ln -s ../../../../../. monero-stratum
+    ln -s ../../../../../. keva-stratum
     cd "$root"
 fi
 

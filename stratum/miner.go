@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"../hashing"
-	"../util"
+	"github.com/kevacoin-project/keva-stratum/hashing"
+	"github.com/kevacoin-project/keva-stratum/util"
 )
 
 type Job struct {
@@ -152,7 +152,7 @@ func (m *Miner) processShare(s *StratumServer, cs *Session, job *Job, t *BlockTe
 	} else {
 		//convertedBlob = cnutil.ConvertBlob(shareBuff)
 		// TODO: fix this.
-		convertedBlob = nill
+		convertedBlob = []byte("fix this!")
 		hashBytes = hashing.Hash(convertedBlob, false)
 	}
 
