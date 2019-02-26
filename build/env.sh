@@ -10,8 +10,8 @@ fi
 # Create fake Go workspace if it doesn't exist yet.
 workspace="$PWD/build/_workspace"
 root="$PWD"
-ethdir="$workspace/src/github.com/sammy007"
-if [ ! -L "$ethdir/monero-stratum" ]; then
+ethdir="$workspace/src/github.com/kevacoin-project"
+if [ ! -L "$ethdir/keva-stratum" ]; then
     mkdir -p "$ethdir"
     cd "$ethdir"
     ln -s ../../../../../. monero-stratum
@@ -25,8 +25,8 @@ GOBIN="$PWD/build/bin"
 export GOPATH GOBIN
 
 # Run the command inside the workspace.
-cd "$ethdir/monero-stratum"
-PWD="$ethdir/monero-stratum"
+cd "$ethdir/keva-stratum"
+PWD="$ethdir/keva-stratum"
 
 # Launch the arguments with the configured environment.
 exec "$@"

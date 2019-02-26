@@ -10,6 +10,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	"../hashing"
 	"../util"
 )
 
