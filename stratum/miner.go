@@ -10,9 +10,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/sammy007/monero-stratum/cnutil"
-	"github.com/sammy007/monero-stratum/hashing"
-	"github.com/sammy007/monero-stratum/util"
+	"../util"
 )
 
 type Job struct {
@@ -151,7 +149,9 @@ func (m *Miner) processShare(s *StratumServer, cs *Session, job *Job, t *BlockTe
 	if s.config.BypassShareValidation {
 		hashBytes, _ = hex.DecodeString(result)
 	} else {
-		convertedBlob = cnutil.ConvertBlob(shareBuff)
+		//convertedBlob = cnutil.ConvertBlob(shareBuff)
+		// TODO: fix this.
+		convertedBlob = nill
 		hashBytes = hashing.Hash(convertedBlob, false)
 	}
 
@@ -177,7 +177,9 @@ func (m *Miner) processShare(s *StratumServer, cs *Session, job *Job, t *BlockTe
 			log.Printf("Block rejected at height %d: %v", t.height, err)
 		} else {
 			if len(convertedBlob) == 0 {
-				convertedBlob = cnutil.ConvertBlob(shareBuff)
+				//convertedBlob = cnutil.ConvertBlob(shareBuff)
+				// TODO: fix this
+				convertedBlob = nil
 			}
 			blockFastHash := hex.EncodeToString(hashing.FastHash(convertedBlob))
 			now := util.MakeTimestamp()

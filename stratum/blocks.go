@@ -6,8 +6,6 @@ import (
 	"encoding/hex"
 	"log"
 	"math/big"
-
-	"github.com/sammy007/monero-stratum/cnutil"
 )
 
 type BlockTemplate struct {
@@ -27,7 +25,8 @@ func (b *BlockTemplate) nextBlob(extraNonce uint32, instanceId []byte) string {
 	copy(blobBuff, b.buffer)
 	copy(blobBuff[b.reservedOffset+4:b.reservedOffset+7], instanceId)
 	copy(blobBuff[b.reservedOffset:], extraBuff.Bytes())
-	blob := cnutil.ConvertBlob(blobBuff)
+	//blob := cnutil.ConvertBlob(blobBuff)
+	blob := nil //TODO: fix this!
 	return hex.EncodeToString(blob)
 }
 
