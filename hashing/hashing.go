@@ -4,7 +4,7 @@ package hashing
 // #cgo LDFLAGS: -L${SRCDIR} -lhashing -Wl,-rpath ${SRCDIR} -lstdc++
 // #include <stdlib.h>
 // #include <stdint.h>
-// #include "src/hashing.h"
+// #include "src/cryptonight.h"
 import "C"
 import "unsafe"
 
@@ -13,7 +13,7 @@ func Hash(blob []byte, fast bool) []byte {
 	if fast {
 		C.cryptonight_fast_hash((*C.char)(unsafe.Pointer(&blob[0])), (*C.char)(unsafe.Pointer(&output[0])), (C.uint32_t)(len(blob)))
 	} else {
-		C.cryptonight_hash((*C.char)(unsafe.Pointer(&blob[0])), (*C.char)(unsafe.Pointer(&output[0])), (C.uint32_t)(len(blob)))
+		C.cryptonight_hash((*C.char)(unsafe.Pointer(&blob[0])), (*C.char)(unsafe.Pointer(&output[0])), (C.uint32_t)(len(blob)), 2)
 	}
 	return output
 }
