@@ -54,7 +54,7 @@ type JSONRpcResp struct {
 }
 
 func NewRPCClient(cfg *pool.Upstream) (*RPCClient, error) {
-	rawUrl := fmt.Sprintf("http://%s:%v/json_rpc", cfg.Host, cfg.Port)
+	rawUrl := fmt.Sprintf("http://%s:%v/", cfg.Host, cfg.Port)
 	url, err := url.Parse(rawUrl)
 	if err != nil {
 		return nil, err
@@ -64,11 +64,13 @@ func NewRPCClient(cfg *pool.Upstream) (*RPCClient, error) {
 	rpcClient.client = &http.Client{
 		Timeout: timeout,
 	}
+	rpcClient.login = cfg.User
+	rpcClient.password = cfg.Password
 	return rpcClient, nil
 }
 
 func (r *RPCClient) GetBlockTemplate(reserveSize int, address string) (*GetBlockTemplateReply, error) {
-	params := map[string]interface{}{"reserve_size": reserveSize, "wallet_address": address}
+	params := []string{}
 	rpcResp, err := r.doPost(r.Url.String(), "getblocktemplate", params)
 	var reply *GetBlockTemplateReply
 	if err != nil {
