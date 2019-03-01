@@ -6,12 +6,14 @@ import (
 	"encoding/hex"
 	"log"
 	"math/big"
+
+	"github.com/sammy007/monero-stratum/cnutil"
 )
 
 type BlockTemplate struct {
-	difficulty     *big.Int
 	diffInt64      int64
 	height         int64
+	difficulty     *big.Int
 	reservedOffset int
 	prevHash       string
 	buffer         []byte
@@ -25,8 +27,7 @@ func (b *BlockTemplate) nextBlob(extraNonce uint32, instanceId []byte) string {
 	copy(blobBuff, b.buffer)
 	copy(blobBuff[b.reservedOffset+4:b.reservedOffset+7], instanceId)
 	copy(blobBuff[b.reservedOffset:], extraBuff.Bytes())
-	//blob := cnutil.ConvertBlob(blobBuff)
-	blob := []byte("fix this!") //TODO: fix this!
+	blob := cnutil.ConvertBlob(blobBuff)
 	return hex.EncodeToString(blob)
 }
 

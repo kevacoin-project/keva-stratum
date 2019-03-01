@@ -25,19 +25,17 @@ type Stratum struct {
 }
 
 type Port struct {
+	Difficulty int64  `json:"diff"`
 	Host       string `json:"host"`
 	Port       int    `json:"port"`
-	Difficulty int64  `json:"diff"`
 	MaxConn    int    `json:"maxConn"`
 }
 
 type Upstream struct {
-	Name     string `json:"name"`
-	Host     string `json:"host"`
-	Port     int    `json:"port"`
-	User     string `json:"user"`
-	Password string `json:"password"`
-	Timeout  string `json:"timeout"`
+	Name    string `json:"name"`
+	Host    string `json:"host"`
+	Port    int    `json:"port"`
+	Timeout string `json:"timeout"`
 }
 
 type Frontend struct {

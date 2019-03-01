@@ -11,7 +11,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kevacoin-project/keva-stratum/pool"
+	"github.com/sammy007/monero-stratum/pool"
 )
 
 type RPCClient struct {
@@ -32,19 +32,19 @@ type RPCClient struct {
 }
 
 type GetBlockTemplateReply struct {
-	Blob           string `json:"blocktemplate_blob"`
 	Difficulty     int64  `json:"difficulty"`
-	ReservedOffset int    `json:"reserved_offset"`
 	Height         int64  `json:"height"`
+	Blob           string `json:"blocktemplate_blob"`
+	ReservedOffset int    `json:"reserved_offset"`
 	PrevHash       string `json:"prev_hash"`
 }
 
 type GetInfoReply struct {
 	IncomingConnections int64  `json:"incoming_connections_count"`
 	OutgoingConnections int64  `json:"outgoing_connections_count"`
-	Status              string `json:"status"`
 	Height              int64  `json:"height"`
 	TxPoolSize          int64  `json:"tx_pool_size"`
+	Status              string `json:"status"`
 }
 
 type JSONRpcResp struct {
@@ -54,7 +54,7 @@ type JSONRpcResp struct {
 }
 
 func NewRPCClient(cfg *pool.Upstream) (*RPCClient, error) {
-	rawUrl := fmt.Sprintf("http://%s:%v/", cfg.Host, cfg.Port)
+	rawUrl := fmt.Sprintf("http://%s:%v/json_rpc", cfg.Host, cfg.Port)
 	url, err := url.Parse(rawUrl)
 	if err != nil {
 		return nil, err
@@ -64,13 +64,11 @@ func NewRPCClient(cfg *pool.Upstream) (*RPCClient, error) {
 	rpcClient.client = &http.Client{
 		Timeout: timeout,
 	}
-	rpcClient.login = cfg.User
-	rpcClient.password = cfg.Password
 	return rpcClient, nil
 }
 
 func (r *RPCClient) GetBlockTemplate(reserveSize int, address string) (*GetBlockTemplateReply, error) {
-	params := []string{}
+	params := map[string]interface{}{"reserve_size": reserveSize, "wallet_address": address}
 	rpcResp, err := r.doPost(r.Url.String(), "getblocktemplate", params)
 	var reply *GetBlockTemplateReply
 	if err != nil {

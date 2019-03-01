@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/kevacoin-project/keva-stratum/util"
+	"github.com/sammy007/monero-stratum/util"
 )
 
 var noncePattern *regexp.Regexp

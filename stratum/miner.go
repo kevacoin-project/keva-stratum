@@ -10,22 +10,19 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kevacoin-project/keva-stratum/hashing"
-	"github.com/kevacoin-project/keva-stratum/util"
+	"github.com/sammy007/monero-stratum/cnutil"
+	"github.com/sammy007/monero-stratum/util"
 )
 
 type Job struct {
+	height int64
 	sync.RWMutex
 	id          string
 	extraNonce  uint32
-	height      int64
 	submissions map[string]struct{}
 }
 
 type Miner struct {
-	sync.RWMutex
-	id            string
-	ip            string
 	lastBeat      int64
 	startedAt     int64
 	validShares   int64
@@ -34,6 +31,9 @@ type Miner struct {
 	accepts       int64
 	rejects       int64
 	shares        map[int64]int64
+	sync.RWMutex
+	id string
+	ip string
 }
 
 func (job *Job) submit(nonce string) bool {
@@ -150,10 +150,8 @@ func (m *Miner) processShare(s *StratumServer, cs *Session, job *Job, t *BlockTe
 	if s.config.BypassShareValidation {
 		hashBytes, _ = hex.DecodeString(result)
 	} else {
-		//convertedBlob = cnutil.ConvertBlob(shareBuff)
-		// TODO: fix this.
-		convertedBlob = []byte("fix this!")
-		hashBytes = hashing.Hash(convertedBlob, false)
+		convertedBlob = cnutil.ConvertBlob(shareBuff)
+		hashBytes = cnutil.Hash(convertedBlob, false)
 	}
 
 	if !s.config.BypassShareValidation && hex.EncodeToString(hashBytes) != result {
@@ -178,11 +176,9 @@ func (m *Miner) processShare(s *StratumServer, cs *Session, job *Job, t *BlockTe
 			log.Printf("Block rejected at height %d: %v", t.height, err)
 		} else {
 			if len(convertedBlob) == 0 {
-				//convertedBlob = cnutil.ConvertBlob(shareBuff)
-				// TODO: fix this
-				convertedBlob = nil
+				convertedBlob = cnutil.ConvertBlob(shareBuff)
 			}
-			blockFastHash := hex.EncodeToString(hashing.FastHash(convertedBlob))
+			blockFastHash := hex.EncodeToString(cnutil.FastHash(convertedBlob))
 			now := util.MakeTimestamp()
 			roundShares := atomic.SwapInt64(&s.roundShares, 0)
 			ratio := float64(roundShares) / float64(t.diffInt64)

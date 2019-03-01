@@ -5,6 +5,8 @@ import (
 	"math/big"
 	"time"
 	"unicode/utf8"
+
+	"github.com/sammy007/monero-stratum/cnutil"
 )
 
 var Diff1 = StringToBig("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
@@ -49,9 +51,7 @@ func ValidateAddress(addy string, poolAddy string) bool {
 	if prefix != poolPrefix {
 		return false
 	}
-	//return cnutil.ValidateAddress(addy)
-	// TODO: fix this
-	return true
+	return cnutil.ValidateAddress(addy)
 }
 
 func reverse(src []byte) []byte {
