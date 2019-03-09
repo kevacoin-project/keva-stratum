@@ -4,3 +4,5 @@ project(keva-stratum)
 
 add_subdirectory(cnutil)
 
+add_custom_target(build ALL DEPENDS cnutil COMMAND go build)
+
