@@ -13,9 +13,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kevacoin-project/keva-stratum/pool"
-	"github.com/kevacoin-project/keva-stratum/rpc"
-	"github.com/kevacoin-project/keva-stratum/util"
+	"../pool"
+	"../rpc"
+	"../util"
 )
 
 type StratumServer struct {
@@ -53,11 +53,11 @@ type Endpoint struct {
 type Session struct {
 	lastBlockHeight int64
 	sync.Mutex
-	conn            *net.TCPConn
-	enc             *json.Encoder
-	ip              string
-	endpoint        *Endpoint
-	validJobs       []*Job
+	conn      *net.TCPConn
+	enc       *json.Encoder
+	ip        string
+	endpoint  *Endpoint
+	validJobs []*Job
 }
 
 const (

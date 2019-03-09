@@ -12,6 +12,7 @@ Makefile
 *.a
 *.so
 *.dylib
+keva-stratum
 
 # Configs
 config.json

@@ -11,7 +11,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kevacoin-project/keva-stratum/pool"
+	"../pool"
 )
 
 type RPCClient struct {
