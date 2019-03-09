@@ -7,7 +7,7 @@ import (
 	"log"
 	"math/big"
 
-	"github.com/sammy007/monero-stratum/cnutil"
+	"github.com/kevacoin-project/keva-stratum/cnutil"
 )
 
 type BlockTemplate struct {

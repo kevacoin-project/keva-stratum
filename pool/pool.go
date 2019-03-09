@@ -32,10 +32,12 @@ type Port struct {
 }
 
 type Upstream struct {
-	Name    string `json:"name"`
-	Host    string `json:"host"`
-	Port    int    `json:"port"`
-	Timeout string `json:"timeout"`
+	Name     string `json:"name"`
+	Host     string `json:"host"`
+	Port     int    `json:"port"`
+	Timeout  string `json:"timeout"`
+	User     string `json:"user"`
+	Password string `json:"password"`
 }
 
 type Frontend struct {

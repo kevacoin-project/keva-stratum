@@ -2,7 +2,7 @@
 
 High performance CryptoNote mining stratum with Web-interface written in Golang.
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/sammy007/monero-stratum)](https://goreportcard.com/report/github.com/sammy007/monero-stratum)
+[![Go Report Card](https://goreportcard.com/badge/github.com/kevacoin-project/keva-stratum)](https://goreportcard.com/report/github.com/kevacoin-project/keva-stratum)
 [![CircleCI](https://circleci.com/gh/sammy007/monero-stratum.svg?style=svg)](https://circleci.com/gh/sammy007/monero-stratum)
 
 **Stratum feature list:**
@@ -44,7 +44,7 @@ Install Golang and required packages:
 
 Clone stratum:
 
-    git clone https://github.com/sammy007/monero-stratum.git
+    git clone https://github.com/kevacoin-project/keva-stratum.git
     cd monero-stratum
 
 Build stratum:
@@ -70,7 +70,7 @@ Install Golang and required packages:
 
 Clone stratum:
 
-    git clone https://github.com/sammy007/monero-stratum.git
+    git clone https://github.com/kevacoin-project/keva-stratum.git
     cd monero-stratum
 
 Build stratum:

@@ -11,7 +11,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/sammy007/monero-stratum/pool"
+	"github.com/kevacoin-project/keva-stratum/pool"
 )
 
 type RPCClient struct {
@@ -54,12 +54,13 @@ type JSONRpcResp struct {
 }
 
 func NewRPCClient(cfg *pool.Upstream) (*RPCClient, error) {
-	rawUrl := fmt.Sprintf("http://%s:%v/json_rpc", cfg.Host, cfg.Port)
+	//rawUrl := fmt.Sprintf("http://%s:%v/json_rpc", cfg.Host, cfg.Port)
+	rawUrl := fmt.Sprintf("http://%s:%v", cfg.Host, cfg.Port)
 	url, err := url.Parse(rawUrl)
 	if err != nil {
 		return nil, err
 	}
-	rpcClient := &RPCClient{Name: cfg.Name, Url: url}
+	rpcClient := &RPCClient{Name: cfg.Name, Url: url, login: cfg.User, password: cfg.Password}
 	timeout, _ := time.ParseDuration(cfg.Timeout)
 	rpcClient.client = &http.Client{
 		Timeout: timeout,

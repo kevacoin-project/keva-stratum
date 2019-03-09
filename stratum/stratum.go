@@ -13,9 +13,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/sammy007/monero-stratum/pool"
-	"github.com/sammy007/monero-stratum/rpc"
-	"github.com/sammy007/monero-stratum/util"
+	"github.com/kevacoin-project/keva-stratum/pool"
+	"github.com/kevacoin-project/keva-stratum/rpc"
+	"github.com/kevacoin-project/keva-stratum/util"
 )
 
 type StratumServer struct {

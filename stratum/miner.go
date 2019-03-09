@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/sammy007/monero-stratum/cnutil"
-	"github.com/sammy007/monero-stratum/util"
+	"github.com/kevacoin-project/keva-stratum/cnutil"
+	"github.com/kevacoin-project/keva-stratum/util"
 )
 
 type Job struct {
