@@ -13,10 +13,18 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/go-redis/redis"
+
 	"../pool"
 	"../rpc"
 	"../util"
 )
+
+var RedisClient *redis.Client = redis.NewClient(&redis.Options{
+	Addr:     "localhost:6379",
+	Password: "",
+	DB:       0,
+})
 
 type StratumServer struct {
 	luckWindow       int64

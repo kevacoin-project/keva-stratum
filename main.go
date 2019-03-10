@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"time"
 
 	"./pool"
@@ -15,6 +16,7 @@ import (
 
 	"github.com/goji/httpauth"
 	"github.com/gorilla/mux"
+	"github.com/hashicorp/go-version"
 	"github.com/yvasiyarov/gorelic"
 )
 
@@ -83,7 +85,43 @@ func readConfig(cfg *pool.Config) {
 	}
 }
 
+func checkRedisVersion(info string) bool {
+	var versionStr string
+	parts := strings.Split(info, "\r\n")
+	for _, line := range parts {
+		if strings.Index(line, ":") != -1 {
+			valParts := strings.Split(line, ":")
+			if valParts[0] == "redis_version" {
+				versionStr = valParts[1]
+				break
+			}
+		}
+	}
+	if versionStr == "" {
+		log.Printf("Could not detect redis version - must be super old or broken")
+		return false
+	}
+	minVersion, _ := version.NewVersion("2.6")
+	curVersion, err := version.NewVersion(versionStr)
+	if err != nil {
+		log.Printf("Could not check redis version: " + err.Error())
+		return false
+	}
+	if curVersion.LessThan(minVersion) {
+		log.Printf("You're using redis version %s the minimum required version is 2.6. Follow the damn usage instructions...", versionStr)
+		return false
+	}
+	return true
+}
+
 func main() {
+	info, err := stratum.RedisClient.Info().Result()
+	if err != nil {
+		log.Fatal("Cannot start redis server.")
+	}
+	if !checkRedisVersion(info) {
+		os.Exit(1)
+	}
 	rand.Seed(time.Now().UTC().UnixNano())
 	readConfig(&cfg)
 	startNewrelic()
