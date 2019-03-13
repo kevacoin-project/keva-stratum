@@ -16,7 +16,7 @@ include_directories("src/external/easylogging++")
 include_directories("src/external/unbound")
 
 # Build library
-add_library(${CXXLIB} SHARED src/main.cc src/cryptonote_basic/cryptonote_format_utils.cpp
+add_library(${CXXLIB} SHARED src/cnutil.cpp src/cryptonote_basic/cryptonote_format_utils.cpp
         src/crypto/tree-hash.c src/crypto/crypto.cpp src/crypto/crypto-ops.c src/crypto/crypto-ops-data.c
         src/crypto/hash.c src/crypto/slow-hash.c
         src/crypto/oaes_lib.c src/crypto/aesb.c

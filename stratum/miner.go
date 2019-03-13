@@ -169,7 +169,9 @@ func (m *Miner) processShare(s *StratumServer, cs *Session, job *Job, t *BlockTe
 	block := hashDiff.Cmp(t.difficulty) >= 0
 
 	if block {
-		_, err := r.SubmitBlock(hex.EncodeToString(shareBuff))
+		// Testing, force AuxPow
+		auxBuf := cnutil.GenerateAuxBlob(shareBuff)
+		_, err := r.SubmitBlock(hex.EncodeToString(shareBuff), hex.EncodeToString(auxBuf))
 		if err != nil {
 			atomic.AddInt64(&m.rejects, 1)
 			atomic.AddInt64(&r.Rejects, 1)

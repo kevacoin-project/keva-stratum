@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 uint32_t convert_blob(const char *blob, uint32_t len, char *out);
+uint32_t convert_blob_to_auxpow_blob(const char *blob, uint32_t len, char** out);
 bool validate_address(const char *addr, uint32_t len);
 
 void cryptonight_hash(const char* input, char* output, uint32_t len);

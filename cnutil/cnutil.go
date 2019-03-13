@@ -3,6 +3,7 @@ package cnutil
 // #cgo CFLAGS: -std=c11 -D_GNU_SOURCE
 // #cgo LDFLAGS: -L${SRCDIR} -Wl,-rpath=\$ORIGIN/cnutil -lcnutil -Wl,-rpath ${SRCDIR} -lstdc++
 // #include <stdlib.h>
+// #include <string.h>
 // #include "src/cnutil.h"
 import "C"
 import "unsafe"
@@ -15,6 +16,18 @@ func ConvertBlob(blob []byte) []byte {
 
 	size := (C.uint32_t)(len(blob))
 	C.convert_blob(input, size, out)
+	return output
+}
+
+func GenerateAuxBlob(blob []byte) []byte {
+	input := (*C.char)(unsafe.Pointer(&blob[0]))
+
+	size := (C.uint32_t)(len(blob))
+	var out *C.char
+	blobSize := C.convert_blob_to_auxpow_blob(input, size, &out)
+	defer C.free(unsafe.Pointer(out))
+	output := make([]byte, blobSize)
+	C.memcpy(unsafe.Pointer(&output[0]), unsafe.Pointer(out), (C.size_t)(blobSize))
 	return output
 }
 

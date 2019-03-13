@@ -94,8 +94,8 @@ func (r *RPCClient) GetInfo() (*GetInfoReply, error) {
 	return reply, err
 }
 
-func (r *RPCClient) SubmitBlock(hash string) (*JSONRpcResp, error) {
-	return r.doPost(r.Url.String(), "submitblock", []string{hash})
+func (r *RPCClient) SubmitBlock(hash string, auxBlock string) (*JSONRpcResp, error) {
+	return r.doPost(r.Url.String(), "submitblock", []string{hash, auxBlock})
 }
 
 func (r *RPCClient) doPost(url, method string, params interface{}) (*JSONRpcResp, error) {
