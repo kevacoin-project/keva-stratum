@@ -1,6 +1,7 @@
 package pool
 
 type Config struct {
+	IsKeva                  bool       `json:"isKeva"`
 	Address                 string     `json:"address"`
 	BypassAddressValidation bool       `json:"bypassAddressValidation"`
 	BypassShareValidation   bool       `json:"bypassShareValidation"`

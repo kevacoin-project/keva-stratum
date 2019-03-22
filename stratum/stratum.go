@@ -13,6 +13,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	"../cnutil"
 	"../pool"
 	"../rpc"
 	"../util"
@@ -79,11 +80,6 @@ func NewStratum(cfg *pool.Config) *StratumServer {
 	}
 	log.Printf("Default upstream: %s => %s", stratum.rpc().Name, stratum.rpc().Url)
 
-	r := stratum.rpc()
-	if !cfg.BypassAddressValidation && !util.ValidateAddress(r, cfg.Address, true) {
-		log.Fatal(cfg.Address + " is either not a valid address or not owned by upstream server")
-	}
-
 	stratum.miners = NewMinersMap()
 	stratum.sessions = make(map[*Session]struct{})
 
@@ -132,6 +128,7 @@ func NewStratum(cfg *pool.Config) *StratumServer {
 	}()
 
 	go func() {
+		var addressedCheck = false
 		for {
 			select {
 			case <-infoTimer.C:
@@ -139,6 +136,19 @@ func NewStratum(cfg *pool.Config) *StratumServer {
 					_, err := v.UpdateInfo()
 					if err != nil {
 						log.Printf("Unable to update info on upstream %s: %v", v.Name, err)
+					}
+
+					if err == nil && !addressedCheck {
+						addressedCheck = true
+						r := stratum.rpc()
+						if !cfg.BypassAddressValidation {
+							if cfg.IsKeva && !util.ValidateAddress_Keva(r, cfg.Address, true) {
+								log.Fatal(cfg.Address + " is either not a valid address or not owned by upstream server")
+							}
+							if !cfg.IsKeva && !cnutil.ValidateAddress(cfg.Address) {
+								log.Fatal(cfg.Address + " is not a valid address")
+							}
+						}
 					}
 				}
 				current := stratum.rpc()

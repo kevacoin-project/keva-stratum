@@ -121,9 +121,11 @@ func (r *RPCClient) doPost(url, method string, params interface{}) (*JSONRpcResp
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode < 200 || resp.StatusCode >= 400 {
-		return nil, errors.New(resp.Status)
-	}
+	/*
+		if resp.StatusCode < 200 || resp.StatusCode >= 400 {
+			return nil, errors.New(resp.Status)
+		}
+	*/
 
 	var rpcResp *JSONRpcResp
 	err = json.NewDecoder(resp.Body).Decode(&rpcResp)

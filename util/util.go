@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"math/big"
 	"time"
+	"unicode/utf8"
 
+	"../cnutil"
 	"../rpc"
 )
 
@@ -42,7 +44,7 @@ func GetHashDifficulty(hashBytes []byte) (*big.Int, bool) {
 	return diff.Div(Diff1, diff), true
 }
 
-func ValidateAddress(r *rpc.RPCClient, addr string, checkIsMine bool) bool {
+func ValidateAddress_Keva(r *rpc.RPCClient, addr string, checkIsMine bool) bool {
 	rpcResp, err := r.ValidateAddress(addr)
 	if err != nil {
 		return false
@@ -59,6 +61,18 @@ func ValidateAddress(r *rpc.RPCClient, addr string, checkIsMine bool) bool {
 		return reply.IsValid
 	}
 	return false
+}
+
+func ValidateAddress(addy string, poolAddy string) bool {
+	if len(addy) != len(poolAddy) {
+		return false
+	}
+	prefix, _ := utf8.DecodeRuneInString(addy)
+	poolPrefix, _ := utf8.DecodeRuneInString(poolAddy)
+	if prefix != poolPrefix {
+		return false
+	}
+	return cnutil.ValidateAddress(addy)
 }
 
 func reverse(src []byte) []byte {

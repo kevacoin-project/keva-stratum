@@ -1,0 +1,65 @@
+{
+	"isKeva": true,
+	"address": "TKj7HMzeLAxd5DSoo35XuCfNH2yWC9y2Xb",
+	"bypassAddressValidation": false,
+	"bypassShareValidation": false,
+
+	"threads": 1,
+
+	"estimationWindow": "15m",
+	"luckWindow": "24h",
+	"largeLuckWindow": "72h",
+
+	"blockRefreshInterval": "1s",
+
+	"stratum": {
+		"timeout": "15m",
+
+		"listen": [
+			{
+				"host": "0.0.0.0",
+				"port": 1111,
+				"diff": 8000,
+				"maxConn": 32768
+			},
+			{
+				"host": "0.0.0.0",
+				"port": 3333,
+				"diff": 16000,
+				"maxConn": 32768
+			},
+			{
+				"host": "0.0.0.0",
+				"port": 5555,
+				"diff": 16000,
+				"maxConn": 32768
+			}
+		]
+	},
+
+	"frontend": {
+		"enabled": true,
+		"listen": "0.0.0.0:8082",
+		"login": "admin",
+		"password": "",
+		"hideIP": false
+	},
+
+	"upstreamCheckInterval": "5s",
+
+	"upstream": [
+		{
+			"name": "Test",
+			"host": "127.0.0.1",
+			"port": 19332,
+			"timeout": "300s",
+			"user": "yourusername",
+			"password": "yourpassword"
+		}
+	],
+
+	"newrelicEnabled": false,
+	"newrelicName": "MyStratum",
+	"newrelicKey": "SECRET_KEY",
+	"newrelicVerbose": false
+}

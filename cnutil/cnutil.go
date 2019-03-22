@@ -20,6 +20,15 @@ func ConvertBlob(blob []byte) []byte {
 	return output
 }
 
+func ValidateAddress(addr string) bool {
+	input := C.CString(addr)
+	defer C.free(unsafe.Pointer(input))
+
+	size := (C.uint32_t)(len(addr))
+	result := C.validate_address(input, size)
+	return (bool)(result)
+}
+
 func Hash(blob []byte, fast bool, height int) []byte {
 	output := make([]byte, 32)
 	if fast {
