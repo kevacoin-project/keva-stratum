@@ -21,12 +21,7 @@ func (s *StratumServer) handleLoginRPC(cs *Session, params *LoginParams) (*JobRe
 
 	address, id := extractWorkerId(params.Login)
 
-	r := s.rpc()
 	if !s.config.BypassAddressValidation {
-		if s.config.IsKeva && !util.ValidateAddress_Keva(r, address, false) {
-			log.Printf("Invalid address %s used for login by %s", address, cs.ip)
-			return nil, &ErrorReply{Code: -1, Message: "Invalid address used for login"}
-		}
 		if !s.config.IsKeva && !util.ValidateAddress(address, s.config.Address) {
 			log.Printf("Invalid address %s used for login by %s", address, cs.ip)
 			return nil, &ErrorReply{Code: -1, Message: "Invalid address used for login"}
