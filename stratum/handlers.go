@@ -5,8 +5,6 @@ import (
 	"regexp"
 	"strings"
 	"sync/atomic"
-
-	"../util"
 )
 
 var noncePattern *regexp.Regexp
@@ -18,11 +16,16 @@ func init() {
 }
 
 func (s *StratumServer) handleLoginRPC(cs *Session, params *LoginParams) (*JobReply, *ErrorReply) {
-	address, id := extractWorkerId(params.Login)
-	if !s.config.BypassAddressValidation && !util.ValidateAddress(address, s.config.Address) {
-		log.Printf("Invalid address %s used for login by %s", address, cs.ip)
-		return nil, &ErrorReply{Code: -1, Message: "Invalid address used for login"}
-	}
+
+	_, id := extractWorkerId(params.Login)
+
+	/*
+		r := s.rpc()
+		if !s.config.BypassAddressValidation && !util.ValidateAddress(r, address, false) {
+			log.Printf("Invalid address %s used for login by %s", address, cs.ip)
+			return nil, &ErrorReply{Code: -1, Message: "Invalid address used for login"}
+		}
+	*/
 
 	t := s.currentBlockTemplate()
 	if t == nil {

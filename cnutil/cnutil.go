@@ -5,7 +5,9 @@ package cnutil
 // #include <stdlib.h>
 // #include "src/cnutil.h"
 import "C"
-import "unsafe"
+import (
+	"unsafe"
+)
 
 func ConvertBlob(blob []byte) []byte {
 	output := make([]byte, 76)
@@ -18,25 +20,16 @@ func ConvertBlob(blob []byte) []byte {
 	return output
 }
 
-func ValidateAddress(addr string) bool {
-	input := C.CString(addr)
-	defer C.free(unsafe.Pointer(input))
-
-	size := (C.uint32_t)(len(addr))
-	result := C.validate_address(input, size)
-	return (bool)(result)
-}
-
-func Hash(blob []byte, fast bool) []byte {
+func Hash(blob []byte, fast bool, height int) []byte {
 	output := make([]byte, 32)
 	if fast {
 		C.cryptonight_fast_hash((*C.char)(unsafe.Pointer(&blob[0])), (*C.char)(unsafe.Pointer(&output[0])), (C.uint32_t)(len(blob)))
 	} else {
-		C.cryptonight_hash((*C.char)(unsafe.Pointer(&blob[0])), (*C.char)(unsafe.Pointer(&output[0])), (C.uint32_t)(len(blob)))
+		C.cryptonight_hash((*C.char)(unsafe.Pointer(&blob[0])), (*C.char)(unsafe.Pointer(&output[0])), (C.uint32_t)(len(blob)), (C.int)(height))
 	}
 	return output
 }
 
 func FastHash(blob []byte) []byte {
-	return Hash(append([]byte{byte(len(blob))}, blob...), true)
+	return Hash(append([]byte{byte(len(blob))}, blob...), true, 0)
 }

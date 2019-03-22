@@ -47,6 +47,11 @@ type GetInfoReply struct {
 	Status              string `json:"status"`
 }
 
+type ValidateAddressReply struct {
+	IsValid bool `json:"isvalid"`
+	IsMine  bool `json:"ismine"`
+}
+
 type JSONRpcResp struct {
 	Id     *json.RawMessage       `json:"id"`
 	Result *json.RawMessage       `json:"result"`
@@ -95,6 +100,10 @@ func (r *RPCClient) GetInfo() (*GetInfoReply, error) {
 
 func (r *RPCClient) SubmitBlock(hash string) (*JSONRpcResp, error) {
 	return r.doPost(r.Url.String(), "submitblock", []string{hash})
+}
+
+func (r *RPCClient) ValidateAddress(addr string) (*JSONRpcResp, error) {
+	return r.doPost(r.Url.String(), "validateaddress", []string{addr})
 }
 
 func (r *RPCClient) doPost(url, method string, params interface{}) (*JSONRpcResp, error) {

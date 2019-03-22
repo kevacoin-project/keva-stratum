@@ -68,7 +68,18 @@ func (cs *Session) getJob(t *BlockTemplate) *JobReplyData {
 	}
 	job.submissions = make(map[string]struct{})
 	cs.pushJob(job)
-	reply := &JobReplyData{JobId: job.id, Blob: blob, Target: cs.endpoint.targetHex}
+	majorVersion, err := strconv.ParseInt(blob[0:2], 16, 32)
+	if err != nil {
+		panic("Failed to get major version")
+	}
+	variant := majorVersion - 6
+	reply := &JobReplyData{
+		JobId:   job.id,
+		Blob:    blob,
+		Target:  cs.endpoint.targetHex,
+		Height:  t.height,
+		Variant: variant,
+	}
 	return reply
 }
 
@@ -151,7 +162,7 @@ func (m *Miner) processShare(s *StratumServer, cs *Session, job *Job, t *BlockTe
 		hashBytes, _ = hex.DecodeString(result)
 	} else {
 		convertedBlob = cnutil.ConvertBlob(shareBuff)
-		hashBytes = cnutil.Hash(convertedBlob, false)
+		hashBytes = cnutil.Hash(convertedBlob, false, int(t.height))
 	}
 
 	if !s.config.BypassShareValidation && hex.EncodeToString(hashBytes) != result {

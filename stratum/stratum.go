@@ -79,6 +79,11 @@ func NewStratum(cfg *pool.Config) *StratumServer {
 	}
 	log.Printf("Default upstream: %s => %s", stratum.rpc().Name, stratum.rpc().Url)
 
+	r := stratum.rpc()
+	if !cfg.BypassAddressValidation && !util.ValidateAddress(r, cfg.Address, true) {
+		log.Fatal(cfg.Address + " is either not a valid address or not owned by upstream server")
+	}
+
 	stratum.miners = NewMinersMap()
 	stratum.sessions = make(map[*Session]struct{})
 

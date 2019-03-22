@@ -18,10 +18,3 @@ extern "C" uint32_t convert_blob(const char *blob, size_t len, char *out) {
     output.copy(out, output.length(), 0);
     return output.length();
 }
-
-extern "C" bool validate_address(const char *addr, size_t len) {
-    std::string input = std::string(addr, len);
-    std::string output = "";
-    uint64_t prefix;
-    return tools::base58::decode_addr(addr, prefix, output);
-}

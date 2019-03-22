@@ -2,11 +2,11 @@ package util
 
 import (
 	"encoding/hex"
+	"encoding/json"
 	"math/big"
 	"time"
-	"unicode/utf8"
 
-	"../cnutil"
+	"../rpc"
 )
 
 var Diff1 = StringToBig("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
@@ -42,16 +42,23 @@ func GetHashDifficulty(hashBytes []byte) (*big.Int, bool) {
 	return diff.Div(Diff1, diff), true
 }
 
-func ValidateAddress(addy string, poolAddy string) bool {
-	if len(addy) != len(poolAddy) {
+func ValidateAddress(r *rpc.RPCClient, addr string, checkIsMine bool) bool {
+	rpcResp, err := r.ValidateAddress(addr)
+	if err != nil {
 		return false
 	}
-	prefix, _ := utf8.DecodeRuneInString(addy)
-	poolPrefix, _ := utf8.DecodeRuneInString(poolAddy)
-	if prefix != poolPrefix {
-		return false
+	var reply *rpc.ValidateAddressReply
+	if rpcResp.Result != nil {
+		err = json.Unmarshal(*rpcResp.Result, &reply)
+		if err != nil {
+			return false
+		}
+		if checkIsMine {
+			return reply.IsMine
+		}
+		return reply.IsValid
 	}
-	return cnutil.ValidateAddress(addy)
+	return false
 }
 
 func reverse(src []byte) []byte {

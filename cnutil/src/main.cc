@@ -26,17 +26,9 @@ extern "C" uint32_t convert_blob(const char *blob, size_t len, char *out) {
     return output.length();
 }
 
-extern "C" bool validate_address(const char *addr, size_t len) {
-    std::string input = std::string(addr, len);
-    std::string output = "";
-    uint64_t prefix;
-    return tools::base58::decode_addr(addr, prefix, output);
-}
-
-
-extern "C" void cryptonight_hash(const char* input, char* output, uint32_t len) {
+extern "C" void cryptonight_hash(const char* input, char* output, uint32_t len, int height) {
     const int variant = input[0] >= 7 ? input[0] - 6 : 0;
-    crypto::cn_slow_hash(input, len, output, variant, 0, 0);
+    crypto::cn_slow_hash(input, len, output, variant, 0, height);
 }
 
 extern "C" void cryptonight_fast_hash(const char* input, char* output, uint32_t len) {
