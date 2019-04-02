@@ -31,7 +31,7 @@ Use Ubuntu 16.04 LTS.
 
 Compile Monero source (with shared libraries option):
 
-    apt-get install git cmake build-essential libssl-dev pkg-config libboost-all-dev
+    apt-get install git cmake build-essential libssl-dev pkg-config libboost-all-dev libsodium-dev
     git clone https://github.com/monero-project/monero.git
     cd monero
     git checkout tags/v0.11.0.0 -b v0.11.0.0
