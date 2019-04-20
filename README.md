@@ -1,9 +1,8 @@
-# monero-stratum
+# keva-stratum
 
-High performance CryptoNote mining stratum with Web-interface written in Golang.
+High performance CryptoNote mining stratum with Web-interface written in Golang. This project is forked from [monero-stratum](https://github.com/sammy007/monero-stratum), with the support for Kevacoin. It includes the part of Monero source code that is required for build and therefore does not need an external Monero source tree. It also builds on Windows through MSYS2.
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/kevacoin-project/keva-stratum)](https://goreportcard.com/report/github.com/kevacoin-project/keva-stratum)
-[![CircleCI](https://circleci.com/gh/sammy007/monero-stratum.svg?style=svg)](https://circleci.com/gh/sammy007/monero-stratum)
 
 **Stratum feature list:**
 
@@ -22,70 +21,111 @@ High performance CryptoNote mining stratum with Web-interface written in Golang.
 Dependencies:
 
   * go-1.6
-  * Everything required to build Monero
-  * Monero >= **v0.11.0.0** (sometimes `master` branch required)
+  * Everything required to build [Monero](https://github.com/monero-project/monero) or [Kevacoin](https://github.com/kevacoin-project/kevacoin). Follow their build instructions to install the dependencies for your system.
 
 ### Linux
 
-Use Ubuntu 16.04 LTS.
-
-Compile Monero source (with shared libraries option):
-
-    apt-get install git cmake build-essential libssl-dev pkg-config libboost-all-dev libsodium-dev
-    git clone https://github.com/monero-project/monero.git
-    cd monero
-    git checkout tags/v0.11.0.0 -b v0.11.0.0
-    cmake -DBUILD_SHARED_LIBS=1 .
-    make
+Use Ubuntu 16.04 LTS or 18.04 LTS.
 
 Install Golang and required packages:
 
     sudo apt-get install golang
+    go get "github.com/goji/httpauth"
+    go get "github.com/gorilla/mux"
+    go get "github.com/yvasiyarov/gorelic"
 
 Clone stratum:
 
     git clone https://github.com/kevacoin-project/keva-stratum.git
-    cd monero-stratum
+    cd keva-stratum
 
 Build stratum:
 
-    MONERO_DIR=/path/to/monero cmake .
-    make
-
-`MONERO_DIR=/path/to/monero` is optional, not needed if both `monero` and `monero-stratum` is in the same directory like `/opt/src/`. By default make will search for monero libraries in `../monero`. You can just run `cmake .`.
-
-### Mac OS X
-
-Compile Monero source:
-
-    git clone https://github.com/monero-project/monero.git
-    cd monero
-    git checkout tags/v0.11.0.0 -b v0.11.0.0
     cmake .
     make
+
+### Mac OS X
 
 Install Golang and required packages:
 
     brew update && brew install go
+    go get "github.com/goji/httpauth"
+    go get "github.com/gorilla/mux"
+    go get "github.com/yvasiyarov/gorelic"
 
 Clone stratum:
 
     git clone https://github.com/kevacoin-project/keva-stratum.git
-    cd monero-stratum
+    cd keva-stratum
 
 Build stratum:
 
-    MONERO_DIR=/path/to/monero cmake .
+    cmake .
     make
+
+
+### Windows
+
+Just like Monero, keva-stratum can be built on Windows using the MinGW toolchain within [MSYS2](https://www.msys2.org/) environment.
+
+- Download and install the [MSYS2 installer](https://www.msys2.org/), either the 64-bit or the 32-bit package, depending on your system.
+- Open the MSYS shell via the application `mingw32` (for 32-bit Windows) or `mingw64` (for 64-bit windows).
+- Update packages using pacman:
+
+        pacman -Syu
+
+- Install dependencies:
+
+  To build for 64-bit Windows:
+
+      pacman -S mingw-w64-x86_64-toolchain make mingw-w64-x86_64-cmake mingw-w64-x86_64-boost mingw-w64-x86_64-openssl mingw-w64-x86_64-zeromq mingw-w64-x86_64-libsodium mingw-w64-x86_64-hidapi
+
+   To build for 32-bit Windows:
+
+      pacman -S mingw-w64-i686-toolchain make mingw-w64-i686-cmake mingw-w64-i686-boost mingw-w64-i686-openssl mingw-w64-i686-zeromq mingw-w64-i686-libsodium mingw-w64-i686-hidapi
+
+    Install Golang:
+
+      pacman -S mingw-w64-x86_64-go
+      go get "github.com/goji/httpauth"
+      go get "github.com/gorilla/mux"
+      go get "github.com/yvasiyarov/gorelic"
+
+Clone stratum:
+
+    git clone https://github.com/kevacoin-project/keva-stratum.git
+    cd keva-stratum
+
+Build stratum:
+
+    cmake -G "MSYS Makefiles" .
+
+**IMPORTANT: STOP AND CHECK**
+
+Check the output of `cmake` and make sure it finds the `OpenSSL` library, and the library is **inside** your `MSYS2` directory. e.g. the output should be something like this:
+
+    -- Found OpenSSL: C:/msys64/mingw64/lib/libcrypto.dll.a (found version "1.1.1b")
+
+If the `OpenSSL` is not inside your `MSYS2` directory, `cmake` is not using the correct `OpenSSL` library. e.g.
+
+    -- Found OpenSSL: C:/OpenSSL-Win64/lib/libeay32.lib (found version "1.0.1a")
+
+In the above case, you need to adjust the search path so that `cmake` uses the correct library.
+
+Now we are ready to build:
+
+    make
+    cp cnutil/libcnutil.dll .
+
 
 ### Running Stratum
 
-    ./build/bin/monero-stratum config.json
+    ./keva-stratum config.json
 
 If you need to bind to privileged ports and don't want to run from `root`:
 
     sudo apt-get install libcap2-bin
-    sudo setcap 'cap_net_bind_service=+ep' /path/to/monero-stratum
+    sudo setcap 'cap_net_bind_service=+ep' /path/to/keva-stratum
 
 ## Configuration
 
@@ -152,13 +192,6 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
 
 You must use `anything.WorkerID` as username in your miner. Either disable address validation or use `<address>.WorkerID` as username. If there is no workerID specified your rig stats will be merged under `0` worker. If mining software contains dev fee rounds its stats will usually appear under `0` worker. This stratum acts like your own pool, the only exception is that you will get rewarded only after block found, shares only used for stats.
 
-### Donations
-
-**XMR**: `47v4BWeUPFrM9YkYRYk2pkS9CubAPEc7BJjNjg4FvF66Y2oVrTAaBjDZhmFzAXgqCNRvBH2gupQ2gNag2FkP983ZMptvUWG`
-
-![](https://cdn.pbrd.co/images/GP5tI1D.png)
-
-Highly appreciated.
 
 ### License
 
