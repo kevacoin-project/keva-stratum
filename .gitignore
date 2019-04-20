@@ -12,6 +12,8 @@ Makefile
 *.a
 *.so
 *.dylib
+*.dll
+*.exe
 keva-stratum
 
 # Configs

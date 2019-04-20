@@ -34,7 +34,7 @@
 
 #include "hash-ops.h"
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__MINGW64__) || defined(__MINGW32__)
 #include <malloc.h>
 #elif !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__DragonFly__) \
   && !defined(__NetBSD__)
