@@ -1,6 +1,6 @@
 # keva-stratum
 
-High performance CryptoNote mining stratum with Web-interface written in Golang. This project is forked from [monero-stratum](https://github.com/sammy007/monero-stratum), with the support for Kevacoin. It includes the part of Monero source code that is required for build and therefore does not need an external Monero source tree. It also builds on Windows through MSYS2.
+High performance CryptoNote mining stratum with Web-interface written in Golang. This project is forked from [monero-stratum](https://github.com/sammy007/monero-stratum), with the support for Kevacoin and simpler build process. It includes the part of Monero source code required for the project and does not need an external Monero source tree. It also builds on Windows through MSYS2.
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/kevacoin-project/keva-stratum)](https://goreportcard.com/report/github.com/kevacoin-project/keva-stratum)
 
