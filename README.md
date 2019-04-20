@@ -30,9 +30,7 @@ Use Ubuntu 16.04 LTS or 18.04 LTS.
 Install Golang and required packages:
 
     sudo apt-get install golang
-    go get "github.com/goji/httpauth"
-    go get "github.com/gorilla/mux"
-    go get "github.com/yvasiyarov/gorelic"
+
 
 Clone stratum:
 
@@ -41,6 +39,8 @@ Clone stratum:
 
 Build stratum:
 
+    mkdir build
+    cd build
     cmake .
     make
 
@@ -49,9 +49,6 @@ Build stratum:
 Install Golang and required packages:
 
     brew update && brew install go
-    go get "github.com/goji/httpauth"
-    go get "github.com/gorilla/mux"
-    go get "github.com/yvasiyarov/gorelic"
 
 Clone stratum:
 
@@ -60,6 +57,8 @@ Clone stratum:
 
 Build stratum:
 
+    mkdir build
+    cd build
     cmake .
     make
 
@@ -87,9 +86,6 @@ Just like Monero, keva-stratum can be built on Windows using the MinGW toolchain
     Install Golang:
 
       pacman -S mingw-w64-x86_64-go
-      go get "github.com/goji/httpauth"
-      go get "github.com/gorilla/mux"
-      go get "github.com/yvasiyarov/gorelic"
 
 Clone stratum:
 
@@ -98,6 +94,8 @@ Clone stratum:
 
 Build stratum:
 
+    mkdir build
+    cd build
     cmake -G "MSYS Makefiles" .
 
 **IMPORTANT: STOP AND CHECK**
@@ -108,14 +106,13 @@ Check the output of `cmake` and make sure it finds the `OpenSSL` library, and th
 
 If the `OpenSSL` is not inside your `MSYS2` directory, `cmake` is not using the correct `OpenSSL` library. e.g.
 
-    -- Found OpenSSL: C:/OpenSSL-Win64/lib/libeay32.lib (found version "1.0.1a")
+    -- Found OpenSSL: C:/OpenSSL-Win64/lib/libeay32.lib (found version "1.0.2q")
 
 In the above case, you need to adjust the search path so that `cmake` uses the correct library.
 
 Now we are ready to build:
 
     make
-    cp cnutil/libcnutil.dll .
 
 
 ### Running Stratum
