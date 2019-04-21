@@ -189,7 +189,7 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
 }
 ```
 
-The `user` and `password` are mandatory, and they must be the same as the ones specified in Kevacoin configuration file `kevacoin.conf`. You must use `anything.WorkerID` as username in your miner. Either disable address validation or use `<address>.WorkerID` as username. If there is no workerID specified your rig stats will be merged under `0` worker. If mining software contains dev fee rounds its stats will usually appear under `0` worker. This stratum acts like your own pool, the only exception is that you will get rewarded only after block found, shares only used for stats.
+The `upstream` is used to point to the Kevacoin daemon `kevacoind`. The `user` and `password` under `upstream` are mandatory, and they must be the same as the ones specified in Kevacoin configuration file `kevacoin.conf`. You must use `anything.WorkerID` as username in your miner. Either disable address validation or use `<address>.WorkerID` as username. If there is no workerID specified your rig stats will be merged under `0` worker. If mining software contains dev fee rounds its stats will usually appear under `0` worker. This stratum acts like your own pool, the only exception is that you will get rewarded only after block found, shares only used for stats.
 
 
 ### License
