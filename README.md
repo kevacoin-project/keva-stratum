@@ -134,7 +134,7 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
 ```javascript
 {
   // Address for block rewards
-  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    --how do user get the address by themselves?
+  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    --how do users get the address by themselves?
   // Don't validate address
   "bypassAddressValidation": true,
   // Don't validate shares
