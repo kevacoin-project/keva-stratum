@@ -134,7 +134,7 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
 ```javascript
 {
   // Address for block rewards
-  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    --how do users get the address by themselves?
+  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    --The value should be the same as defined in kevacoin.conf.BTW,how do users get the address by themselves?
   // Don't validate address
   "bypassAddressValidation": true,
   // Don't validate shares
@@ -185,8 +185,8 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
       "host": "127.0.0.1",
       "port": 18081,
       "timeout": "10s",
-      "user": "yourusername",                  #should be the same as kevacoin.config
-      "password": "yourpassword"               #should be the same as kevacoin.config
+      "user": "yourusername",                  #The value should be the same as kevacoin.config
+      "password": "yourpassword"               #The value should be the same as kevacoin.config
     }
   ]
 }
@@ -194,7 +194,7 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
 
 The `upstream` is used to point to the Kevacoin daemon `kevacoind`. The `user` and `password` under `upstream` are mandatory, and they must be the same as the ones specified in Kevacoin configuration file `kevacoin.conf`. You must use `anything.WorkerID` as username in your miner. Either disable address validation or use `<address>.WorkerID` as username. If there is no workerID specified your rig stats will be merged under `0` worker. If mining software contains dev fee rounds its stats will usually appear under `0` worker. This stratum acts like your own pool, the only exception is that you will get rewarded only after block found, shares only used for stats.
 
-Should we add the URL for https://github.com/xmrig/xmrig/wiki/Ubuntu-Build
+Should we add the URL for https://github.com/xmrig/xmrig/wiki/Ubuntu-Build, and descripe how it works with the keva-stratum?
 
 ### License
 
