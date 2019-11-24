@@ -145,7 +145,7 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
 ```javascript
 {
   // Address for block rewards
-  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    //The value should be the same as defined in kevacoin.conf
+  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    //Please use 'kevacoin-cli getnewaddress' to get the address
   // Don't validate address
   "bypassAddressValidation": true,
   // Don't validate shares
