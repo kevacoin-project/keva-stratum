@@ -45,7 +45,8 @@ Build stratum:
     make
 
 Run stratum:    
-    ./keva-stratum config.json
+
+   ./keva-stratum config.json
 
 If you need to bind to privileged ports and don't want to run from `root`:
 
@@ -70,7 +71,8 @@ Build stratum:
     cmake ..
     make
 
-Run stratum:    
+Run stratum: 
+
     ./keva-stratum config.json
 
 If you need to bind to privileged ports and don't want to run from `root`:
@@ -131,7 +133,8 @@ Now we are ready to build:
 
     make
 
-Run stratum:    
+Run stratum: 
+
     keva-stratum.exe config.json
 
 ## Configuration (config.json)
