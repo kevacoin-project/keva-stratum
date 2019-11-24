@@ -145,7 +145,7 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
 ```javascript
 {
   // Address for block rewards
-  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    --The value should be the same as defined in kevacoin.conf
+  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    //The value should be the same as defined in kevacoin.conf
   // Don't validate address
   "bypassAddressValidation": true,
   // Don't validate shares
@@ -196,8 +196,8 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
       "host": "127.0.0.1",
       "port": 18081,
       "timeout": "10s",
-      "user": "yourusername",                  #The value should be the same as defined in kevacoin.config
-      "password": "yourpassword"               #The value should be the same as defined in kevacoin.config
+      "user": "yourusername",                 //The value should be the same as defined in kevacoin.config
+      "password": "yourpassword"              //The value should be the same as defined in kevacoin.config
     }
   ]
 }
