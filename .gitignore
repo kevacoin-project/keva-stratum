@@ -14,6 +14,7 @@ Makefile
 *.dylib
 *.dll
 *.exe
+*.o
 keva-stratum
 
 # Configs
@@ -23,3 +24,4 @@ mainnet.json
 
 /build/_workspace/
 /build/bin/
+.deps

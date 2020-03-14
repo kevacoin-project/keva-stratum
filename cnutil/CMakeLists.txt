@@ -11,6 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -D_GNU_SOURCE -maes")
 set(CMAKE_C_FLAGS "-maes")
 
 include_directories("src")
+include_directories("src/randomx")
 include_directories("src/contrib/epee/include")
 include_directories("src/external/easylogging++")
 include_directories("src/external/unbound")
@@ -35,6 +36,33 @@ add_library(${CXXLIB} SHARED src/main.cc src/cryptonote_basic/cryptonote_format_
         src/cryptonote_basic/cryptonote_basic_impl.cpp
         src/crypto/keccak.c src/common/base58.cpp
         src/crypto/CryptonightR_JIT.c
+        src/crypto/rx-slow-hash.c
+        src/randomx/argon2_avx2.c
+        src/randomx/argon2_core.c
+        src/randomx/argon2_ref.c
+        src/randomx/argon2_ssse3.c
+        src/randomx/blake2/blake2b.c
+        src/randomx/reciprocal.c
+        src/randomx/aes_hash.cpp
+        src/randomx/allocator.cpp
+        src/randomx/assembly_generator_x86.cpp
+        src/randomx/blake2_generator.cpp
+        src/randomx/bytecode_machine.cpp
+        src/randomx/cpu.cpp
+        src/randomx/dataset.cpp
+        src/randomx/instruction.cpp
+        src/randomx/instructions_portable.cpp
+        src/randomx/jit_compiler_x86.cpp
+        src/randomx/jit_compiler_x86_static.S
+        src/randomx/randomx.cpp
+        src/randomx/soft_aes.cpp
+        src/randomx/superscalar.cpp
+        src/randomx/virtual_machine.cpp
+        src/randomx/virtual_memory.cpp
+        src/randomx/vm_compiled.cpp
+        src/randomx/vm_compiled_light.cpp
+        src/randomx/vm_interpreted.cpp
+        src/randomx/vm_interpreted_light.cpp
         src/contrib/epee/src/memwipe.c
         src/contrib/epee/src/mlocker.cpp
         src/contrib/epee/src/hex.cpp

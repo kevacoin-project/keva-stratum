@@ -37,6 +37,8 @@ type GetBlockTemplateReply struct {
 	Blob           string `json:"blocktemplate_blob"`
 	ReservedOffset int    `json:"reserved_offset"`
 	PrevHash       string `json:"prev_hash"`
+	SeedHash       string `json:"seed_hash"`
+	NextSeedHash   string `json:"next_seed_hash"`
 }
 
 type GetInfoReply struct {
@@ -45,6 +47,10 @@ type GetInfoReply struct {
 	Height              int64  `json:"height"`
 	TxPoolSize          int64  `json:"tx_pool_size"`
 	Status              string `json:"status"`
+}
+
+type GetBlockHashReply struct {
+	Hash string `json:"hash"`
 }
 
 type ValidateAddressReply struct {
@@ -104,6 +110,19 @@ func (r *RPCClient) SubmitBlock(hash string) (*JSONRpcResp, error) {
 
 func (r *RPCClient) ValidateAddress(addr string) (*JSONRpcResp, error) {
 	return r.doPost(r.Url.String(), "validateaddress", []string{addr})
+}
+
+func (r *RPCClient) GetBlockHash(height int) (*GetBlockHashReply, error) {
+	params := make(map[string]interface{})
+	rpcResp, err := r.doPost(r.Url.String(), "getblockhash", params)
+	var reply *GetBlockHashReply
+	if err != nil {
+		return nil, err
+	}
+	if rpcResp.Result != nil {
+		err = json.Unmarshal(*rpcResp.Result, &reply)
+	}
+	return reply, err
 }
 
 func (r *RPCClient) doPost(url, method string, params interface{}) (*JSONRpcResp, error) {
