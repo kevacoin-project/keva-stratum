@@ -70,15 +70,24 @@ func (cs *Session) getJob(t *BlockTemplate) *JobReplyData {
 	cs.pushJob(job)
 	majorVersion, err := strconv.ParseInt(blob[0:2], 16, 32)
 	if err != nil {
-		panic("Failed to get major version")
+		log.Printf("Failed to get major version: %v\n", err)
 	}
-	variant := majorVersion - 6
+
+	var algo string
+	if majorVersion == 10 {
+		algo = "cn/r"
+	} else if majorVersion == 12 {
+		algo = "rx/keva"
+	}
+
 	reply := &JobReplyData{
-		JobId:   job.id,
-		Blob:    blob,
-		Target:  cs.endpoint.targetHex,
-		Height:  t.height,
-		Variant: variant,
+		JobId:        job.id,
+		Blob:         blob,
+		Target:       cs.endpoint.targetHex,
+		Height:       t.height,
+		Algo:         algo,
+		SeedHash:     t.seedHash,
+		NextSeedHash: t.nextSeedHash,
 	}
 	return reply
 }
@@ -162,7 +171,13 @@ func (m *Miner) processShare(s *StratumServer, cs *Session, job *Job, t *BlockTe
 		hashBytes, _ = hex.DecodeString(result)
 	} else {
 		convertedBlob = cnutil.ConvertBlob(shareBuff)
-		hashBytes = cnutil.Hash(convertedBlob, false, int(t.height))
+		if len(t.seedHash) == 0 {
+			// cn/r
+			hashBytes = cnutil.Hash(convertedBlob, false, int(t.height), "")
+		} else {
+			// rx/keva
+			hashBytes = cnutil.Hash(convertedBlob, false, int(t.height), t.seedHash)
+		}
 	}
 
 	if !s.config.BypassShareValidation && hex.EncodeToString(hashBytes) != result {

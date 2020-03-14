@@ -45,11 +45,13 @@ type JobReply struct {
 }
 
 type JobReplyData struct {
-	Blob    string `json:"blob"`
-	JobId   string `json:"job_id"`
-	Target  string `json:"target"`
-	Height  int64  `json:"height"`
-	Variant int64  `json:"variant"`
+	Blob         string `json:"blob"`
+	JobId        string `json:"job_id"`
+	Target       string `json:"target"`
+	Height       int64  `json:"height"`
+	Algo         string `json:"algo"`
+	SeedHash     string `json:"seed_hash"`
+	NextSeedHash string `json:"next_seed_hash"`
 }
 
 type StatusReply struct {

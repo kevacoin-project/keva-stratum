@@ -25,7 +25,7 @@ Dependencies:
 
 ### Linux
 
-Use Ubuntu 16.04 LTS or 18.04 LTS, or Ubuntu on Windows Linux Subsystem(WLS). 
+Use Ubuntu 16.04 LTS or 18.04 LTS, or Ubuntu on Windows Linux Subsystem(WLS).
 
 Install Golang and required packages:
 
@@ -44,16 +44,16 @@ Build stratum:
     cmake ..
     make
 
-Run stratum: 
+Run stratum:
 
     ./keva-stratum config.json
-   
+
 
 If you need to bind to privileged ports and don't want to run from `root`:
 
     sudo apt-get install libcap2-bin
     sudo setcap 'cap_net_bind_service=+ep' /path/to/keva-stratum
-    
+
 ### Mac OS X
 
 Install Golang and required packages:
@@ -72,7 +72,7 @@ Build stratum:
     cmake ..
     make
 
-Run stratum: 
+Run stratum:
 
     ./keva-stratum config.json
 
@@ -83,7 +83,7 @@ If you need to bind to privileged ports and don't want to run from `root`:
 
 ### Windows
 
-If you are using Windows Linux Sytem (WLS), please check the instruction under ### Lunix.
+If you are using Windows Linux Sytem (WLS), check the instruction under Linux.
 
 Just like Monero, keva-stratum can be built on Windows using the MinGW toolchain within [MSYS2](https://www.msys2.org/) environment.
 
@@ -116,7 +116,7 @@ Build stratum:
 
     mkdir build
     cd build
-    cmake -G "MSYS Makefiles" .
+    cmake -G "MSYS Makefiles" ..
 
 **IMPORTANT: STOP AND CHECK**
 
@@ -134,7 +134,7 @@ Now we are ready to build:
 
     make
 
-Run stratum: 
+Run stratum:
 
     keva-stratum.exe config.json
 
@@ -145,7 +145,7 @@ Configuration is self-describing, just copy *config.example.json* to *config.jso
 ```javascript
 {
   // Address for block rewards
-  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    //Please use 'kevacoin-cli getnewaddress' to get the address
+  "address": "YOUR-ADDRESS-NOT-EXCHANGE",    // Use 'kevacoin-cli getnewaddress' to get the address
   // Don't validate address
   "bypassAddressValidation": true,
   // Don't validate shares
