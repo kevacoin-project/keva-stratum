@@ -4,7 +4,7 @@ project(assembler C ASM)
 set(CXXLIB "cnutil")
 
 find_package(OpenSSL REQUIRED)
-find_package(Boost COMPONENTS thread system program_options date_time filesystem REQUIRED)
+find_package(Boost COMPONENTS thread system program_options date_time chrono filesystem REQUIRED)
 
 # Flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -D_GNU_SOURCE -maes")
@@ -85,6 +85,7 @@ target_link_libraries(${CXXLIB}
     ${Boost_SYSTEM_LIBRARY}
     ${Boost_PROGRAM_OPTIONS_LIBRARY}
     ${Boost_DATE_TIME_LIBRARY}
+    ${Boost_CHRONO_LIBRARY}
     ${Boost_FILESYSTEM_LIBRARY}
     OpenSSL::SSL
 )
