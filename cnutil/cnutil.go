@@ -53,5 +53,5 @@ func Hash(blob []byte, fast bool, height int, seedHash string) []byte {
 }
 
 func FastHash(blob []byte) []byte {
-	return Hash(append([]byte{byte(len(blob))}, blob...), true, 0, "")
+	return Hash(blob, true, 0, "")
 }

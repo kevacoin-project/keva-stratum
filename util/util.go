@@ -29,13 +29,13 @@ func GetTargetHex(diff int64) string {
 	diffBuff := new(big.Int).Div(Diff1, big.NewInt(diff)).Bytes()
 	copy(padded[32-len(diffBuff):], diffBuff)
 	buff := padded[0:4]
-	targetHex := hex.EncodeToString(reverse(buff))
+	targetHex := hex.EncodeToString(ReverseBytes(buff))
 	return targetHex
 }
 
 func GetHashDifficulty(hashBytes []byte) (*big.Int, bool) {
 	diff := new(big.Int)
-	diff.SetBytes(reverse(hashBytes))
+	diff.SetBytes(ReverseBytes(hashBytes))
 
 	// Check for broken result, empty string or zero hex value
 	if diff.Cmp(new(big.Int)) == 0 {
@@ -75,7 +75,7 @@ func ValidateAddress(addy string, poolAddy string) bool {
 	return cnutil.ValidateAddress(addy)
 }
 
-func reverse(src []byte) []byte {
+func ReverseBytes(src []byte) []byte {
 	dst := make([]byte, len(src))
 	for i := len(src); i > 0; i-- {
 		dst[len(src)-i] = src[i-1]
