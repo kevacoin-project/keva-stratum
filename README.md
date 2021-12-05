@@ -83,7 +83,7 @@ If you need to bind to privileged ports and don't want to run from `root`:
 
 ### Windows
 
-If you are using Windows Linux Sytem (WLS), check the instruction under Linux.
+If you are using Windows Linux Subsystem (WLS), check the instruction under Linux.
 
 Just like Monero, keva-stratum can be built on Windows using the MinGW toolchain within [MSYS2](https://www.msys2.org/) environment.
 
