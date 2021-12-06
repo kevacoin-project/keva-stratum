@@ -7,8 +7,8 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"../cnutil"
-	"../rpc"
+	"kevacoin.org/keva-stratum/v2/cnutil"
+	"kevacoin.org/keva-stratum/v2/rpc"
 )
 
 var Diff1 = StringToBig("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")

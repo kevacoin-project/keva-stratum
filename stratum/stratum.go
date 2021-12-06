@@ -13,10 +13,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"../cnutil"
-	"../pool"
-	"../rpc"
-	"../util"
+	"kevacoin.org/keva-stratum/v2/cnutil"
+	"kevacoin.org/keva-stratum/v2/pool"
+	"kevacoin.org/keva-stratum/v2/rpc"
+	"kevacoin.org/keva-stratum/v2/util"
 )
 
 type StratumServer struct {

@@ -10,8 +10,8 @@ import (
 	"runtime"
 	"time"
 
-	"./pool"
-	"./stratum"
+	"kevacoin.org/keva-stratum/v2/pool"
+	"kevacoin.org/keva-stratum/v2/stratum"
 
 	"github.com/goji/httpauth"
 	"github.com/gorilla/mux"
